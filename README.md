@@ -9,7 +9,7 @@ Azure Devops has this feature in the roadmap but it is not currently avaiable (2
 ## Problem statement
 This tutorial solves the problem of making GitHub able to deploy to Azure **without** using any long lived pre-shared keys like passwords or certificates (e.g. AAD service principals) in a **multiple teams** environment utilizing same infrastructure but with **separation of access**. 
 
-It is possible to utilize Azure Manaed Identities for deployments with utilzing a VM or VM Scale Set that has an associated Managed Identity, https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm. But this solution would require you to have **50 VMs/VMSS for 50 seperate teams** if you want to separate access to Azure for different teams. Hence, different teams utilizing the same VM/VMSS accociated with one MSI would be shared for all teams and potentially create a security concern for your organization.    
+It is possible to utilize Azure Managed Identities for deployments with utilizing a VM or VM Scale Set that has an associated Managed Identity, https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm. But this solution would require you to have **50 VMs/VMSS for 50 seperate teams** if you want to separate access to Azure for different teams. Hence, different teams utilizing the same VM/VMSS accociated with one MSI would be shared for all teams and potentially create a security concern for your organization.    
 
 ## Description
 This is a tutorial for  building
@@ -28,13 +28,13 @@ Below shows the architecture with AKS.
 
 We are going to setup Azure Container Apps, AKS, Azure Key Vault with a secret and let a Github Self hosted runner in AKS and Azure Container Apps able to read the secret via the User Managed Identity. 
 
-1. Create an Azure [User Managed Identity](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azcli#create-a-user-assigned-managed-identity-1):
+1. Create a resource group called ADO and in that one create an Azure [User Managed Identity](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-manage-user-assigned-managed-identities?pivots=identity-mi-methods-azcli#create-a-user-assigned-managed-identity-1):
 
     ```sh
     az identity create -g ADO -n umi-github
     ```
 
-    The picture below shows the User Managed Identity created and select the "Federated credentials".
+    The picture below shows the User Managed Identity created.
     ![Federated UMI](./img/umi-fed.png)
 
 2. Click on the Federated Credentials and then "+Add Credential" and choose "Github Actions to deploy to Azure Resources"
@@ -50,6 +50,7 @@ We are going to setup Azure Container Apps, AKS, Azure Key Vault with a secret a
     ![Federated UMI](./img/umi-fed3.png)
 
 4. Create an Azure Container Registry, https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-azure-cli.
+You will need to pick a unique name for the Azure Container Registry, in this example we are using acrgithubrunner.
 
 ```sh
     az acr create --resource-group ADO \
@@ -59,6 +60,13 @@ We are going to setup Azure Container Apps, AKS, Azure Key Vault with a secret a
 
 This will build and push your image into the Azure Container Registry without the need to have docker installed on your client machine, it takes a minute or so.
 
+***********
+Jag tycker inte det är tydligt var man skall köra dessa kommandon. Testade den Codespace som var uppsatt och testade Azure Cloud Shell. I slutändan tog jag ner projektet lokalt, körde lokalt men blev ombedd att byta inloggningskommando till 
+
+**az acr login -n acrgithubrunnerjh --expose-token**
+
+***********
+
 
 ```sh
 cd ./docker
@@ -66,6 +74,7 @@ az acr login -n acrgithubrunner
 az acr build --image  mygithubrunner:1.0  --registry acrgithubrunner . -f Dockerfile-github-selfhosted-runner
 
 ----
+TA BORT DETTA BLOCK??
 
 > cd docker
 > az acr build --image  mygithubrunner:1.0  --registry acrgithubrunner . -f Dockerfile-github-selfhosted-runner
@@ -85,7 +94,7 @@ Run ID: dt1 was successful after 3m48s
 Check in your Azure Container Registry, your image should be there now.
 ![ACR](./img/acr.png)
 
-6. Now enable System Managed Identity on the Azure Container Registry so we can use that identity to enable access from our Azure Container App that we are going to create later, please *acrgithubrunner* with the name of your Azure Container Registry.
+6. Now enable System Managed Identity on the Azure Container Registry so we can use that identity to enable access from our Azure Container App that we are going to create later, please replace *acrgithubrunner* with the name of your Azure Container Registry.
 
     ```sh
     az acr identity assign --identities '[system]' --name  acrgithubrunner
@@ -128,6 +137,10 @@ Check in your Azure Container Registry, your image should be there now.
 
 10. Go to the Azure Portal and into your resource group and select the Azure Container App that you just created. Select the *Log Stream* seen below and make sure the Container App is connected and registered to Github.
 ![ACR](./img/runner3.png)
+
+******
+Jag kunde inte se detta. Är det så att loggen inte har en historik och att jag var för sen?  
+******
 
 11. Go to Github and check you self hosted runners and you should have your runner registered and green.
 ![ACR](./img/runner4b.png)

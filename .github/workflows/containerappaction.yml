@@ -1,9 +1,8 @@
 # This is a basic workflow to help you get started with Actions
 name: Run Azure Login with OpenID Connect
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    
 
 jobs:
   deployment:
