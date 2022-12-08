@@ -9,7 +9,7 @@ Azure Devops has this feature in the roadmap but it is not currently avaiable (2
 ## Problem statement
 This tutorial solves the problem of making GitHub able to deploy to Azure **without** using any long lived pre-shared keys like passwords or certificates (e.g. AAD service principals) in a **multiple teams** environment utilizing same infrastructure but with **separation of access**. 
 
-It is possible to utilize Azure Managed Identities for deployments with utilizing a VM or VM Scale Set that has an associated Managed Identity, https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm. But this solution would require you to have **50 VMs/VMSS for 50 seperate teams** if you want to separate access to Azure for different teams. Hence, different teams utilizing the same VM/VMSS accociated with one MSI would be shared for all teams and potentially create a security concern for your organization.    
+It is possible to utilize Azure Managed Identities for deployments with utilizing a VM or VM Scale Set that has an associated Managed Identity, https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm. But this solution would require you to have **50 VMs/VMSS for 50 seperate teams** if you want to separate access to Azure for different teams. Hence, different teams utilizing the same VM/VMSS accociated with one MSI (MSI?) would be shared for all teams and potentially create a security concern for your organization.    
 
 ## Description
 This is a tutorial for  building
@@ -145,7 +145,7 @@ Jag kunde inte se detta. Är det så att loggen inte har en historik och att jag
 11. Go to Github and check you self hosted runners and you should have your runner registered and green.
 ![ACR](./img/runner4b.png)
 
-12. We are going to use the User Managed Identity created in step 1 to deploy to Azure. To achieve that we need the get the clientId, Subscription Id and tenant Id from Azure. Execture the below CLI will give you these details.
+12. We are going to use the User Managed Identity created in step 1 to deploy to Azure. To achieve that we need the get the clientId, Subscription Id and tenant Id from Azure. Execute the below CLI will give you these details.
 
 ```sh
     >az identity show -g ADO -n umi-github
@@ -180,6 +180,16 @@ Jag kunde inte se detta. Är det så att loggen inte har en historik och att jag
  ![ACR](./img/action2.png)
 
  16. In the containerappaction.yml there is a reference "my-secret-vault" which is a Azure Key Vault that we are targeting for reading the information from a secret named "a-secret". **Now we are going to create an Azure Key Vault and make the User Managed Identity be able to read secrets from the Azure Key Vault**. The User Managed Identity could have any rights you would like it to have to make a successfull deployment in Azure. Note: the name is globally unique so you need to have unique name.
+
+*******
+Det finns 4 olika namn på keyvault :)
+
+skript 'my-secret-vault-90', screenshot akv-ado-msi-1-ne, text my-secret-vault. 
+
+Och användaren måste ha ett eget unikt. 
+Testade du 90 gånger föresten? :)
+*******
+
 
 ```sh
     az keyvault create \
