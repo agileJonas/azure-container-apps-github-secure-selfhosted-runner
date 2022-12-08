@@ -19,5 +19,6 @@ jobs:
   
       - name: 'Run Azure CLI commands'
         run: |            
-            az keyvault secret show --name a-secret --vault-name my-secret-vault-90
+            az keyvault secret show --name a-secret --vault-name jonas-secret-vault-1
+
             
