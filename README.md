@@ -140,6 +140,7 @@ Check in your Azure Container Registry, your image should be there now.
 
 ******
 Jag kunde inte se detta. Är det så att loggen inte har en historik och att jag var för sen?  
+
 ******
 
 11. Go to Github and check you self hosted runners and you should have your runner registered and green.
