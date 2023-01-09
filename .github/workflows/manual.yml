@@ -36,9 +36,7 @@ jobs:
 
     # Store listofPrimes1 in Azure Storage
     - name: Store results
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
+      run:
           echo "Creating container ${{ github.run_id }} in Azure Storage" 
           az storage container create -n ${{ github.run_id }} --account-name selfhostedresults
           listofPrimes1 >> listofPrimes1.txt
