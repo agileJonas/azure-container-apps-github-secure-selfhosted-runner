@@ -37,8 +37,8 @@ jobs:
     # Store listofPrimes1 in Azure Storage
     - name: Store results
       run: |
-          echo "Creating container nr2 ${{ github.run_id }} in Azure Storage" \
-          az storage container create -n ${{ github.run_id }} --account-name selfhostedresults  \
+          echo "Creating container nr2 ${{ github.run_id }} in Azure Storage" 
+          az storage container create -n ${{ github.run_id }} --account-name selfhostedresults  
           echo "All is good!" 
           # listofPrimes1 >> listofPrimes1.txt
           # echo "Storing results in Azure Storage" 
