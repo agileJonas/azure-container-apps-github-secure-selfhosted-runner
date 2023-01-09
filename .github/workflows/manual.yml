@@ -21,7 +21,7 @@ jobs:
   # Calc1
   Calc1:
     # The type of runner that the job will run on
-    runs-on: selfhosted
+    runs-on: self-hosted
 
     steps:
     # Calc again
