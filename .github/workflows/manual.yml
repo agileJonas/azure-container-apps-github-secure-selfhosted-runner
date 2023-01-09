@@ -42,7 +42,7 @@ jobs:
           echo "All is good!" 
           ${{ steps.listofPrimes1.outputs.stdout }} >> listofPrimes1.txt
           echo "Storing results in Azure Storage" 
-          az storage blob upload --container-name ${{ github.run_id }} --account-name selfhostedresults --name listofPrimes1.txt --file listofPrimes1.txt
+          az storage blob upload --container-name ${{ github.run_id }} --account-name selfhostedresults --name listofPrimes1.txt --file listofPrimes1.txt --sas-token '${{ secrets.AZURE_CONTAINER_SAS }}'
 
 
   # Calc2
