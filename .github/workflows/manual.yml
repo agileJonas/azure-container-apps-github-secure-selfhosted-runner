@@ -19,17 +19,45 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # Calc1
-  Calc1:
+  CalcBatch1:
     # The type of runner that the job will run on
     runs-on: self-hosted
 
     steps:
     # Uses an action that is a local action, set the input start to 1 and end to 1000 and get the output
-    - name: Calcing
+    - name: Calcing batch 1
       uses: agileJonas/calculate-prime-action@main
       id: firstlistofPrimes     
       with:
         start: 10000000
         end: 10100000
+
+  # Calc2
+  CalcBatch2:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    steps:
+    # Uses an action that is a local action, set the input start to 1 and end to 1000 and get the output
+    - name: Calcing batch 2
+      uses: agileJonas/calculate-prime-action@main
+      id: firstlistofPrimes     
+      with:
+        start: 20000000
+        end: 20100000
+
+  # Calc3
+  CalcBatch3:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    steps:
+    # Uses an action that is a local action, set the input start to 1 and end to 1000 and get the output
+    - name: Calcing batch 3
+      uses: agileJonas/calculate-prime-action@main
+      id: firstlistofPrimes     
+      with:
+        start: 30000000
+        end: 30100000
 
 
