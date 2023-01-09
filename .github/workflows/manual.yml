@@ -40,7 +40,7 @@ jobs:
           echo "Creating container nr5 ${{ github.run_id }} in Azure Storage" 
           az storage container create -n ${{ github.run_id }} --account-name selfhostedresults --sas-token '${{ secrets.AZURE_CONTAINER_SAS }}'
           echo "All is good!" 
-          ${{ steps.listofPrimes1.outputs.* }} >> listofPrimes1.txt
+          ${{ steps.listofPrimes1.outputs.listOfPrimes }} >> listofPrimes1.txt
           echo "Storing results in Azure Storage" 
           az storage blob upload --container-name ${{ github.run_id }} --account-name selfhostedresults --name listofPrimes1.txt --file listofPrimes1.txt --sas-token '${{ secrets.AZURE_CONTAINER_SAS }}'
 
