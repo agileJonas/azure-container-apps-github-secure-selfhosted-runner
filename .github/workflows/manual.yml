@@ -46,7 +46,7 @@ jobs:
       id: listofPrimes1
       with:
         start: 10000000
-        end: 10100000
+        end: 10050000
 
     # Store listofPrimes1 in Azure Storage
     - name: Store results
@@ -71,7 +71,7 @@ jobs:
       id: listofPrimes2     
       with:
         start: 20000000
-        end: 20100000
+        end: 20030000
 
   # Calc3
   CalcBatch3:
@@ -86,6 +86,6 @@ jobs:
       id: listofPrimes3     
       with:
         start: 30000000
-        end: 30100000
+        end: 30020000
 
 
