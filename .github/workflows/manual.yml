@@ -37,8 +37,8 @@ jobs:
     # Store listofPrimes1 in Azure Storage
     - name: Store results
       run: |
-          echo "Creating container nr3 ${{ github.run_id }} in Azure Storage" 
-          az storage container create -n 114 --account-name selfhostedresults --sas-token 'sp=r&st=2023-01-09T14:41:45Z&se=2023-01-11T22:41:45Z&spr=https&sv=2021-06-08&sr=c&sig=wd%2BgUrC4Hd2W9goBR5vetZNdK4Vmft3QJWGLsGT6xDI%3D'
+          echo "Creating container nr5 ${{ github.run_id }} in Azure Storage" 
+          az storage container create -n 115 --account-name selfhostedresults --sas-token '?sv=2021-06-08&ss=b&srt=sco&sp=rwlaciytfx&se=2023-01-12T22:56:58Z&st=2023-01-09T14:56:58Z&spr=https&sig=nW6sFoMC9vKJx5pQtRzLf3FNFbQrWduL4mP3ZuIu8Ts%3D'
           echo "All is good!" 
           # listofPrimes1 >> listofPrimes1.txt
           # echo "Storing results in Azure Storage" 
