@@ -30,7 +30,7 @@ jobs:
       id: firstlistofPrimes     
       with:
         start: 10000000
-        end: 10100000
+        end: 10050000
 
   # Calc2
   CalcBatch2:
@@ -44,7 +44,7 @@ jobs:
       id: firstlistofPrimes     
       with:
         start: 20000000
-        end: 20100000
+        end: 20050000
 
   # Calc3
   CalcBatch3:
@@ -58,6 +58,6 @@ jobs:
       id: firstlistofPrimes     
       with:
         start: 30000000
-        end: 30100000
+        end: 30050000
 
 
