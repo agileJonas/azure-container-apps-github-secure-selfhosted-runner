@@ -36,14 +36,13 @@ jobs:
 
     # Store listofPrimes1 in Azure Storage
     - name: Store results
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          echo "Creating container ${{ github.run_id }} in Azure Storage" 
-          az storage container create -n ${{ github.run_id }} --account-name selfhostedresults
-          listofPrimes1 >> listofPrimes1.txt
+      run: |
+          echo "Creating container nr5 ${{ github.run_id }} in Azure Storage" 
+          az storage container create -n ${{ github.run_id }} --account-name selfhostedresults --sas-token '${{ secrets.AZURE_CONTAINER_SAS }}'
+          echo "All is good!" 
+          echo "List of primes in this array ${{ steps.listofPrimes1.outputs.listOfPrimes }}" > listofPrimes1.txt
           echo "Storing results in Azure Storage" 
-          az storage blob upload --container-name ${{ github.run_id }} --account-name selfhostedresults --name listofPrimes1.txt --file listofPrimes1.txt
+          az storage blob upload --container-name ${{ github.run_id }} --account-name selfhostedresults --name listofPrimes1.txt --file listofPrimes1.txt --sas-token '${{ secrets.AZURE_CONTAINER_SAS }}'
 
 
   # Calc2
@@ -60,6 +59,16 @@ jobs:
       with:
         start: 20000000
         end: 20030000
+
+    # Store listofPrimes2 in Azure Storage
+    - name: Store results
+      run: 
+          echo "Creating container ${{ github.run_id }} in Azure Storage" 
+          az storage container create -n ${{ github.run_id }} --account-name selfhostedresults
+          listofPrimes1 >> listofPrimes1.txt
+          echo "Storing results in Azure Storage" 
+          az storage blob upload --container-name ${{ github.run_id }} --account-name selfhostedresults --name listofPrimes1.txt --file listofPrimes1.txt
+
 
   # Calc3
   CalcBatch3:
