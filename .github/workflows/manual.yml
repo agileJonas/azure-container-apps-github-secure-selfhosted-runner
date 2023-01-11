@@ -31,8 +31,8 @@ jobs:
       id: listofPrimes1
       with:
         start: 10000000
-        end: 10000050
- #       end: 10050000
+#        end: 10000050
+        end: 10050000
 
     # Store listofPrimes1 in Azure Storage
     - name: Store results
@@ -49,7 +49,7 @@ jobs:
   CalcBatch2:
     # The type of runner that the job will run on
     runs-on: self-hosted
-    if: false
+    if: true
 
     steps:
     # Uses an action that is a local action, set the input start to 1 and end to 1000 and get the output
@@ -74,7 +74,7 @@ jobs:
   CalcBatch3:
     # The type of runner that the job will run on
     runs-on: self-hosted
-    if: false
+    if: true
 
     steps:
     # Uses an action that is a local action, set the input start to 1 and end to 1000 and get the output
